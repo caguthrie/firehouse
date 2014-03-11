@@ -1,0 +1,6 @@
+require_relative '../config/environment'
+require 'JSON'
+require 'open-uri'
+
+ip = open( 'http://jsonip.com/ ' ){ |s| JSON::parse( s.string())['ip'] }
+Launchy.open("https://www.google.com/maps/dir/#{Geocoder.coordinates(ip).to_s.gsub("[","").gsub("]","").gsub(" ","+")}/#{Firehouse.near(ip).first.address.gsub(" ", "+")}")
