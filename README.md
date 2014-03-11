@@ -3,7 +3,7 @@ tags: oop, api, json
 languages: ruby
 ---
 
-# Firehouse Finder
+# NYC Firehouse Finder
 
 ## Description
 
