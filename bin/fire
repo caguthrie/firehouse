@@ -1,6 +1,23 @@
+#!/usr/bin/env ruby
 require_relative '../config/environment'
 require 'JSON'
 require 'open-uri'
 
-ip = open( 'http://jsonip.com/ ' ){ |s| JSON::parse( s.string())['ip'] }
-Launchy.open("https://www.google.com/maps/dir/#{Geocoder.coordinates(ip).to_s.gsub("[","").gsub("]","").gsub(" ","+")}/#{Firehouse.near(ip).first.address.gsub(" ", "+")}")
+def launch_it(from, to)
+  Launchy.open("https://www.google.com/maps/dir/#{from}/#{to}")
+end
+
+begin
+  if ARGV.length == 0
+    ip = open( 'http://jsonip.com/ ' ){ |s| JSON::parse( s.string())['ip'] }
+    launch_it(Geocoder.coordinates(ip).to_s.gsub("[","").gsub("]","").gsub(" ","+"),Firehouse.near(ip).first.address.gsub(" ", "+"))
+  else
+    addy = ""
+    ARGV.each do |a|
+      addy = addy + " " + a.strip.gsub("\"","")
+    end
+    launch_it(Geocoder.coordinates(addy).to_s.gsub("[","").gsub("]","").gsub(" ","+"),Firehouse.near(addy).first.address.gsub(" ", "+"))
+  end
+rescue
+  puts "Invalid location or location too far away from NYC"
+end
