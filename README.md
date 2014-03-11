@@ -7,4 +7,4 @@ languages: ruby
 
 ## Description
 
-This ruby app opens up google maps, showing you the directions to the nearest firehouse.
+This ruby app opens up google maps, showing you the directions to the nearest firehouse.  Only works in NYC area.
